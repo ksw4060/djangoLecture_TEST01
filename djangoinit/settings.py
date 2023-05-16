@@ -5,7 +5,6 @@ from os import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-AUTH_USER_MODEL = 'user.UserModel'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -39,13 +38,17 @@ REST_FRAMEWORK = {
 
     )
 }
+
+"""
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
+    # simplejwt랑 같이 써도 되는건지 궁금함.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+"""
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
