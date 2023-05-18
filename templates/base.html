@@ -42,12 +42,13 @@
             </ul>
         </div>
         <form class="form-inline my-2 my-lg-0">
+            {% csrf_token %}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/sign-in"> Sign In <span class="sr-only"></span></a>
+                    <a class="nav-link" href="/user/sign-in"> Sign In <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/sign-up"> Sign Up <span class="sr-only"></span></a>
+                    <a class="nav-link" href="/user/sign-up"> Sign Up <span class="sr-only"></span></a>
                 </li>
             </ul>
         </form>

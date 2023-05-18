@@ -8,6 +8,7 @@
         <div class="wrap">
             <h2 class="title-center"> 로그인</h2>
             <form class="form-area">
+                {% csrf_token %}
                 <div class="form-group mt-2 mb-2">
                     <label for="username">이름</label>
                     <input type="text" class="form-control" id="username" name="username">
@@ -19,7 +20,7 @@
                 <hr>
                 <div style="float: right">
                     <button type="submit" class="btn btn-primary">로그인</button>
-                    <a href="/sign-up" class="btn btn-secondary">회원가입 페이지로</a>
+                    <a href="/user/sign-up" class="btn btn-secondary">회원가입 페이지로</a>
                 </div>
             </form>
 

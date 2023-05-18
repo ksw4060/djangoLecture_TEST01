@@ -8,9 +8,13 @@ def home(request):
     if user:
         return redirect('/tweet')
     else:
-        return redirect('/sign-in')
+        return redirect('/user/sign-in')
 
 
 def tweet(request):
     if request.method == 'GET':
-        return render(request, 'tweet/home.html')
+        user = request.user.is_authenticated
+        if user:
+            return render(request, 'tweet/home.html')
+        else:
+            return redirect('/user/log-in')
