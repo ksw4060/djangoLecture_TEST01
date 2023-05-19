@@ -1,11 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model #사용자가 있는지 검사하는 함수
+from user.models import UserModel
+from django.contrib import auth
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 
 def sign_up_view(request):
     if request.method == 'GET':
-        return render(request, 'user/signup.html')
+        user = request.user.is_authenticated # 로그인 된 사용자가 요청하는지 검사
+        if user: # 로그인이 되어있다면
+            return redirect('/')
+        else: # 로그인이 되어있지 않다면
+            return render(request, 'user/signup.html')
     elif request.method == 'POST':
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
@@ -16,13 +24,16 @@ def sign_up_view(request):
             return render(request, 'user/signup.html')
         else:
             exist_user = get_user_model().objects.filter(username=username)
+
             if exist_user:
                 return render(request, 'user/signup.html') # 사용자가 존재하기 때문에 사용자를 저장하지 않고 회원가입 페이지를 다시 띄움
             else:
                 UserModel.objects.create_user(username=username, password=password, bio=bio)
-                return redirect('/user/sign-in') # 회원가입이 완료되었으므로 로그인 페이지로 이동
+                return redirect('/sign-in') # 회원가입이 완료되었으므로 로그인 페이지로 이동
 # 회원 가입시, 이미 존재하는 유저이다 > 회원 가입 할 필요 없음
 # 이미 존하는 유저가 아니다 > 회원 가입 시켜야함
+# user/views.py
+
 # user/views.py
 
 def sign_in_view(request):
@@ -33,8 +44,19 @@ def sign_in_view(request):
         me = auth.authenticate(request, username=username, password=password)  # 사용자 불러오기
         if me is not None:  # 저장된 사용자의 패스워드와 입력받은 패스워드 비교
             auth.login(request, me)
-            return HttpResponse("로그인 성공")
+            return redirect('home')
         else:
-            return redirect('/user/sign-in')  # 로그인 실패
+            return redirect('sign-in')  # 로그인 실패
     elif request.method == 'GET':
-        return render(request, 'user/signin.html')
+        user = request.user.is_authenticated  # 사용자가 로그인 되어 있는지 검사
+        if user:  # 로그인이 되어 있다면
+            return redirect('home')
+        else:  # 로그인이 되어 있지 않다면
+            return render(request, 'user/signin.html')
+
+
+
+@login_required
+def logout(request):
+    auth.logout(request) # 인증 되어있는 정보를 없애기
+    return redirect('home')

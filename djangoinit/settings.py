@@ -1,6 +1,6 @@
 
 from pathlib import Path
-from os import environ
+from os import path, environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,23 +30,27 @@ INSTALLED_APPS = [
     'tweet',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework.authentication.BasicAuthentication',
 
-#     )
+    )
+}
+
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     # simplejwt랑 같이 써도 되는건지 궁금함.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
 # }
 
-"""
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    # simplejwt랑 같이 써도 되는건지 궁금함.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
-"""
+# 'DEFAULT_AUTHENTICATION_CLASSES': [
+#     # 'rest_framework.authentication.SessionAuthentication',
+#     'rest_framework.authentication.BasicAuthentication',
+# ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
