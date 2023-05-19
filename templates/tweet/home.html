@@ -1,80 +1,83 @@
 <!-- templates/tweet/home.html -->
+
 {% extends 'base.html' %}
+{% block title %}
+  메인페이지
+{% endblock %}
 
 {% block content %}
-    <div class="container timeline-container">
-        <div class="row">
-            <!-- 왼쪽 컬럼 -->
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ user.username }}</h5>
-                        <p class="card-text"> {{ user.bio }}</p>
-                    </div>
-                </div>
-            </div>
-            <!-- 오른 쪽 컬럼-->
-            <div class="col-md-7">
-                <!-- 글을 작성 하는 곳 -->
-                <div class="row mb-2">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">나의 이야기를 적어주세요</h5>
-                                        <p>
-                                        {% comment %} 작성하기 폼 태그 양식 {% endcomment %}
-                                        <form action="/tweet/" method="post">
-                                            {% csrf_token %}
-                                            <div class="form-group mb-2">
-                                                <textarea class="form-control" style="resize: none" name='my-content' id="my-content"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" style="float:right;">작성하기</button>
-                                        </form>
-                                        {% comment %} 폼 태그 양식 끝 {% endcomment %}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <!-- 작성 된 글이 나오는 곳 -->
-                <div class="row">
-                    {% for tw in tweet %}
-                        <div class="col-md-12 mb-2">
-                            <div class="card">
-                                <div class="card-body">
-                                    {% if tw.author == user %}
-                                    <div style="text-align: right">
-                                        <a href="/tweet/delete/{{ tw.id }}">
-                                            <span class="badge rounded-pill bg-danger">삭제</span>
-                                        </a>
-                                    </div>
-                                    {% endif %}
-                                    <div style="text-align: right">
-                                        <a href="#">
-                                            <span class="badge rounded-pill bg-success">보기</span>
-                                        </a>
-                                    </div>
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h5 class="mt-0">{{ tw.content }}</h5>
-                                        </div>
-                                        <div style="text-align: right">
-                                            <span style="font-size: small">{{ tw.author.username }}-{{ tw.created_at|timesince }} 전</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
-            </div>
-            <div class="col-md-2"></div>
+  <div class="container timeline-container">
+    <div class="row">
+      <!-- 왼쪽 컬럼 -->
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ user.username }}</h5>
+            <p class="card-text">{{ user.bio }}</p>
+          </div>
         </div>
+      </div>
+      <!-- 오른 쪽 컬럼 -->
+      <div class="col-md-7">
+        <!-- 글을 작성 하는 곳 -->
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-0">나의 이야기를 적어주세요</h5>
+                    {% comment %}작성하기 폼 태그 양식{% endcomment %}
+                    <p>
+                      <form action="/tweet/" method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-2">
+                          <textarea class="form-control" style="resize: none" name="my-content" id="my-content"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="float:right;">작성하기</button>
+                      </form>
+                    </p>
+                    {% comment %}폼 태그 양식 끝{% endcomment %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- 작성 된 글이 나오는 곳 -->
+        <div class="row">
+          {% for tw in tweet %}
+            <div class="col-md-12 mb-2">
+              <div class="card">
+                <div class="card-body">
+                  <!-- 작성자가 유저가 맞다면 -->
+                  {% if tw.author == user %}
+                    <!-- 삭제 버튼 -->
+                    <div style="text-align: right">
+                      <a href="/tweet/delete/{{ tw.id }}"><span class="badge rounded-pill bg-danger">삭제</span></a>
+                    </div>
+                  {% endif %}
+                  <!-- 보기 버튼 -->
+                  <div style="text-align: right">
+                    <a href="/tweet/{{ tw.id }}"><span class="badge rounded-pill bg-success">보기</span></a>
+                  </div>
+                  <!-- 게시글 내용물, 작성자이름, 작성시간 -->
+                  <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-0">{{ tw.content }}</h5>
+                    </div>
+                    <div style="text-align: right">
+                      <span style="font-size: small">{{ tw.author.username }}-{{ tw.created_at|timesince }} 전</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-2"></div>
     </div>
+  </div>
 {% endblock %}
