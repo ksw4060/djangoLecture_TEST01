@@ -32,9 +32,7 @@ def sign_up_view(request):
                 return redirect('/sign-in') # 회원가입이 완료되었으므로 로그인 페이지로 이동
 # 회원 가입시, 이미 존재하는 유저이다 > 회원 가입 할 필요 없음
 # 이미 존하는 유저가 아니다 > 회원 가입 시켜야함
-# user/views.py
 
-# user/views.py
 
 def sign_in_view(request):
     if request.method == 'POST':

@@ -1,4 +1,3 @@
-# tweet/views.py
 from django.shortcuts import render, redirect
 from .models import TweetModel # 글쓰기 모델 -> 가장 윗부분에 적어주세요!
 
@@ -12,12 +11,12 @@ def home(request):
         return redirect('sign-in')
 
 
-
 def tweet(request):
     if request.method == 'GET':  # 요청하는 방식이 GET 방식인지 확인하기
         user = request.user.is_authenticated  # 사용자가 로그인이 되어 있는지 확인하기
-        if user:  # 로그인 한 사용자라면
-            return render(request, 'tweet/home.html')
+        if user:  # 로그인 한 사용자라면3
+            all_tweet = TweetModel.objects.all().order_by('-created_at')
+            return render(request, 'tweet/home.html', {'tweet': all_tweet})
         else:  # 로그인이 되어 있지 않다면
             return redirect('sign-in')
     elif request.method == 'POST':  # 요청 방식이 POST 일때
@@ -28,3 +27,7 @@ def tweet(request):
         my_tweet.save()
         return redirect('tweet')
 
+def delete_tweet(request, id):
+    my_tweet = TweetModel.objects.get(id=id)
+    my_tweet.delete()
+    return redirect('tweet')
