@@ -20,13 +20,13 @@
       <!-- 오른 쪽 컬럼 -->
       <div class="col-md-7">
         <!-- 글을 작성 하는 곳 -->
-        <div class="row mb-2">
+        <div class="row mb-4">
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
                 <div class="media">
                   <div class="media-body">
-                    <h5 class="mt-0">나의 이야기를 적어주세요</h5>
+                    <h5 class="mt-100">나의 이야기를 적어주세요</h5>
                     {% comment %}작성하기 폼 태그 양식{% endcomment %}
                     <p>
                       <form action="/tweet/" method="post">
@@ -77,7 +77,8 @@
           {% endfor %}
         </div>
       </div>
-      <div class="col-md-2"></div>
+      <!-- 왼쪽 컬럼 -->
+
     </div>
   </div>
 {% endblock %}

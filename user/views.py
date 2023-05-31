@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model #사용자가 있는지 검사하는 함수
-from user.models import UserModel
-from django.contrib import auth
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model #사용자가 있는지 검사하는 함수
+from django.contrib import auth
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from user.models import UserModel
 
 
 
